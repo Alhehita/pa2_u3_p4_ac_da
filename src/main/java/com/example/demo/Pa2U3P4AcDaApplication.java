@@ -60,12 +60,36 @@ public class Pa2U3P4AcDaApplication implements CommandLineRunner{
 
 		// this.hotelService.agregar(hotel);
 		
-		List<Hotel> hoteles =this.hotelService.buscarInnerJoin();
-		for (Hotel hotel2 : hoteles ) {
+		
+		
+		List<Hotel> hoteles1 =this.hotelService.buscarOuterRightJoin();
+		for (Hotel hotel2 : hoteles1 ) {
+			System.out.println(hotel2);
+		}
+	
+		List<Hotel> hoteles2 =this.hotelService.buscarOuterLeftJoin();
+		for (Hotel hotel2 : hoteles2 ) {
 			System.out.println(hotel2);
 		}
 		
+		List<Habitacion> habi =this.hotelService.buscarHabitacionOuterLeftJoin();
+		for (Habitacion habitacion3 : habi ) {
+			System.out.println(habitacion3);
+		}
 		
+		List<Hotel> hoteles3 =this.hotelService.buscarOuterFullJoin();
+		for (Hotel hotel2 : hoteles3 ) {
+			
+			//if(hotel12)
+			System.out.println(hotel2);
+		}
+		
+		List<Hotel> hoteles4 =this.hotelService.buscarWhereJoin();
+		for (Hotel hotel2 : hoteles4 ) {
+			
+			//if(hotel12)
+			System.out.println(hotel2);
+		}
 	}
 
 }

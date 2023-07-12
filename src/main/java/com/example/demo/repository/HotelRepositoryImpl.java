@@ -50,9 +50,49 @@ public class HotelRepositoryImpl implements HotelRepository{
 	@Override
 	public List<Hotel> seleccionarInnerJoin() {
 		//select * from hotel h join habitacion ha on h.hote_id = ha.habi_id_hotel
-		TypedQuery<Hotel> myQuery =  this.entityManager.createQuery("SELECT h from Hotel h JOIN h.habitaciones ha", Hotel.class);
+		TypedQuery<Hotel> myQuery =  this.entityManager.createQuery("SELECT h from Hotel h INNER JOIN h.habitaciones ha", Hotel.class);
 		//SELECT h from Hotel h JOIN h.habitaciones ha 
 		return myQuery.getResultList();
 	}
 
+	@Override
+	public List<Hotel> seleccionarOuterRightJoin() {
+		TypedQuery<Hotel> myQuery =  this.entityManager.createQuery("SELECT h from Hotel h RIGHT JOIN h.habitaciones ha", Hotel.class);
+		//SELECT h from Hotel h JOIN h.habitaciones ha 
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Hotel> seleccionarOuterLeftJoin() {
+		TypedQuery<Hotel> myQuery =  this.entityManager.createQuery("SELECT h from Hotel h LEFT JOIN h.habitaciones ha", Hotel.class);
+		//SELECT h from Hotel h JOIN h.habitaciones ha 
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Habitacion> seleccionarHabitacionOuterLeftJoin() {
+		TypedQuery<Habitacion> myQuery =  this.entityManager.createQuery("SELECT ha from Hotel h LEFT JOIN h.habitaciones ha", Habitacion.class);
+		//SELECT h from Hotel h JOIN h.habitaciones ha 
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Hotel> seleccionarOuterFullJoin() {
+		TypedQuery<Hotel> myQuery =  this.entityManager.createQuery("SELECT h from Hotel h FULL JOIN h.habitaciones ha", Hotel.class);
+		//SELECT h from Hotel h JOIN h.habitaciones ha 
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Hotel> seleccionarWhereJoin() {
+		//SELECT h.* FROM hotel h, habitacion ha WHERE h.hote_id = ha.habi_id_hotel
+		//traduccion a JPQL
+		//SELECT h FROM Hotel h, Habitacion ha WHERE h = ha.hotel ----> compara la primary key con la foreing key
+		TypedQuery<Hotel> myQuery =  this.entityManager.createQuery("SELECT h FROM Hotel h, Habitacion ha WHERE h = ha.hotel", Hotel.class);
+		//SELECT h from Hotel h JOIN h.habitaciones ha 
+		return myQuery.getResultList();
+	}
+
+	
+	
 }

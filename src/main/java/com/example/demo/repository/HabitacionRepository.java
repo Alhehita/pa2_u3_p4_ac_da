@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import java.util.List;
+
 import com.example.demo.repository.modelo.Habitacion;
 
 public interface HabitacionRepository {
@@ -13,5 +15,7 @@ public interface HabitacionRepository {
 	public Habitacion seleccionarPorNumero(String numero);
 	
 	public Habitacion seleccionarPorId(Integer id);
+	
+
 
 }

@@ -29,4 +29,10 @@ public interface HotelRepository {
 	public List<Hotel> seleccionarOuterFullJoin();
 
 	public List<Hotel> seleccionarWhereJoin();
-}
+	
+	public List<Hotel> seleccionarFetchJoin();
+	
+	
+		
+	}
+

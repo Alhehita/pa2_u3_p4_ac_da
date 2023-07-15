@@ -14,8 +14,8 @@ import com.example.demo.repository.modelo.Hotel;
 import com.example.demo.service.HotelService;
 
 @SpringBootApplication
-public class Pa2U3P4AcDaApplication implements CommandLineRunner{
-	
+public class Pa2U3P4AcDaApplication implements CommandLineRunner {
+
 	@Autowired
 	HotelService hotelService;
 
@@ -26,70 +26,47 @@ public class Pa2U3P4AcDaApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+
+		List<Hotel> listHotel = this.hotelService.buscarInnerJoin();
+		for (Hotel h : listHotel) {
+
+		System.out.println(h.getNombre());
+		System.out.println("tiene las siguientes habitaciones");
+		for(Habitacion ha : h.getHabitaciones()) {
+			System.out.println(ha.getNumero());
+		}
+			
+		}
 		
-		Hotel hotel = new Hotel();
+		System.out.println("SQL join Fetch");
+		
+		List<Hotel> listHotelF = this.hotelService.buscarFetchJoin();
+		for (Hotel h : listHotelF) {
 
-		hotel.setDireccion("Av. Naciones Unidas");
-
-		hotel.setNombre("Hotel Plaza 1");
-
+		System.out.println(h.getNombre());
+		System.out.println("tiene las siguientes habitaciones Fetch");
+		for(Habitacion ha : h.getHabitaciones()) {
+			System.out.println(ha.getNumero());
+		}
+		
+		Hotel hotel= new Hotel();
+		hotel.setDireccion("Av La Patria");
+		hotel.setNombre("DondeAugusto");
+		
 		Habitacion habitacion = new Habitacion();
-
 		habitacion.setHotel(hotel);
-		habitacion.setNumero("34");
-		habitacion.setValor(new BigDecimal(45));
-
-		Habitacion habitacion1 = new Habitacion();
-
-		habitacion1.setHotel(hotel);
-		habitacion1.setNumero("37");
-		habitacion1.setValor(new BigDecimal(48));
-
-		Habitacion habitacion2 = new Habitacion();
-
-		habitacion2.setHotel(hotel);
-		habitacion2.setNumero("54");
-		habitacion2.setValor(new BigDecimal(59));
-
+		habitacion.setNumero("215");
+		habitacion.setValor(new BigDecimal(70));
+	//	habitacion.setValorIncluidoIVA(new BigDecimal(270).multiply(new BigDecimal(0.12)));
+	
 		List<Habitacion> habitaciones = new ArrayList<>();
 		habitaciones.add(habitacion);
-		habitaciones.add(habitacion1);
-		habitaciones.add(habitacion2);
-
 		hotel.setHabitaciones(habitaciones);
-
-		// this.hotelService.agregar(hotel);
 		
-		
-		
-		List<Hotel> hoteles1 =this.hotelService.buscarOuterRightJoin();
-		for (Hotel hotel2 : hoteles1 ) {
-			System.out.println(hotel2);
-		}
-	
-		List<Hotel> hoteles2 =this.hotelService.buscarOuterLeftJoin();
-		for (Hotel hotel2 : hoteles2 ) {
-			System.out.println(hotel2);
-		}
-		
-		List<Habitacion> habi =this.hotelService.buscarHabitacionOuterLeftJoin();
-		for (Habitacion habitacion3 : habi ) {
-			System.out.println(habitacion3);
-		}
-		
-		List<Hotel> hoteles3 =this.hotelService.buscarOuterFullJoin();
-		for (Hotel hotel2 : hoteles3 ) {
+		this.hotelService.agregar(hotel);
 			
-			//if(hotel12)
-			System.out.println(hotel2);
 		}
 		
-		List<Hotel> hoteles4 =this.hotelService.buscarWhereJoin();
-		for (Hotel hotel2 : hoteles4 ) {
-			
-			//if(hotel12)
-			System.out.println(hotel2);
-		}
 	}
 
 }

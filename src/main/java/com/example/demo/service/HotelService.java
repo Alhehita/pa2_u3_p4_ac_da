@@ -27,4 +27,6 @@ public interface HotelService {
 	public List<Habitacion> buscarHabitacionOuterLeftJoin();
 	
 	public List<Hotel> buscarWhereJoin();
+	
+	public List<Hotel> buscarFetchJoin();
 }

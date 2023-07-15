@@ -13,5 +13,7 @@ public interface HabitacionService {
 	public Habitacion buscarPorNumero(String numero);
 	
 	public Habitacion buscarPorId(Integer id);
+	
+	
 
 }

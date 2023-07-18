@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import com.example.demo.repository.modelo.Matricula;
 
 public interface MatriculaService {
@@ -12,5 +14,7 @@ public interface MatriculaService {
 	public Matricula buscarPorCodigo(String codigo);
 	
 	public void actualizar (Matricula matricula);
+	
+	public void ingresarMatricula(String cedulaE, List<String> codMaterias);
 
 }

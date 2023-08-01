@@ -106,6 +106,12 @@ public class Main {
 		};
 		LOG.info("Function lambda1: " + function1.aplicar(10));
 		
+		//Metodos referenciados
+		LOG.info("Function: \n");
+
+		IPersonaFunction<Character, Integer> function2 = meto2::aplicar;
+		LOG.info("Function metodo referenciado: "+ function2.aplicar(45) );
+		
 		//5. Unary Operator
 		
 		IPersonaUnaryOperator<Integer> unary = numero -> numero +(numero*2);
@@ -113,6 +119,13 @@ public class Main {
 		
 		IPersonaUnaryOperatorFunction<Integer> unary2 = numero -> numero +(numero*2);
 		LOG.info("Unary lambda2: " + unary2.aplicar(3));
+		
+		//Metodos referenciados
+		LOG.info("Unary Operator: \n");
+
+		IPersonaUnaryOperatorFunction<Double> unary3 = meto2::aplicar;
+		LOG.info("Unary metodo referenciado: " + unary3.aplicar(33.3));
+
 
 	}
 

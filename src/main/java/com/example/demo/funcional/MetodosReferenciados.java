@@ -30,5 +30,18 @@ public class MetodosReferenciados {
 		}
 	}
 	
+	//Function
+	public Character aplicar(Integer arg) {
+		char c = Character.forDigit(arg, 10);
+		
+		return c;
+	}
+	
+	//Unary Operator
+	public Double aplicar(Double arg) {
+		Double  res = arg + 23.56;
+		return res;
+	}
+	
 	
 }

@@ -8,19 +8,22 @@ public class MetodosReferenciados {
 	private static final Logger LOG = LoggerFactory.getLogger(MetodosReferenciados.class);
 
 //Supplier
-	public Integer getId() {
+	public static Integer getId() {
 		return 8;
 	}
 	
+	public static String getHO() {
+		return "ale";
+	}
 	//Consumer
-	public void aceptar(String arg) {
+	public  void aceptar(String arg) {
 		String cadena = "Dennisse";
 		
 		LOG.info(cadena +" "+ arg);
 	}
 	
 	//Predicate
-	public boolean evaluar(Integer arg) {
+	public  boolean evaluar(Integer arg) {
 		Integer valor = 15;
 		
 		if(arg.compareTo(valor)>25) {

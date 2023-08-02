@@ -1,7 +1,15 @@
 package com.example.demo.funcional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 
 public class Main {
 
@@ -9,111 +17,86 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		// MetodosReferenciados metodosReferenciados = new MetodosReferenciados();
 
-		IPersona persona = new PersonaImpl();
+		// Metodos HighOrder
 
-		persona.caminar();
+		MetodosHighOrder highOrder = new MetodosHighOrder();
 
-		// 1. Supplier
-		// Clases:
+		// 1 Clases
 
-		IPersonaSupplier<String> supplier1 = new IPersonaSupplierImpl();
-		LOG.info("Supplier clase: " + supplier1.getId());
+		IPersonaSupplier<String> supplierHO = new IPersonaSupplierImpl();
+		MetodosHighOrder.metodo(supplierHO);
 
-		// Lambdas:
+		// 2 Lambdas
+		MetodosHighOrder.metodo(() -> "1751556653");
 
-		IPersonaSupplier<String> supplier2 = () -> "1751556653";
-		LOG.info("Supplier lambda: " + supplier2.getId());
+		// 3 metodos referenciados
 
-		IPersonaSupplier<String> supplier3 = () -> {
-			String cedula = "1751556653";
-			cedula = cedula + "zzzzz";
-			return cedula;
-		};
-		LOG.info("Supplier lambda: " + supplier3.getId());
-		
-		//Metodos Referenciados 
-		
-		MetodosReferenciados meto2 = new MetodosReferenciados();
-		IPersonaSupplier<Integer> supplier4 = meto2 :: getId;
-		
-		
-		LOG.info("Supplier metodo referenciado: " + supplier4.getId());
+		MetodosHighOrder.metodo(MetodosReferenciados::getHO);
 
-
-		// 2. Consumer
-
-		// Clases
-
-		IPersonaConsumer<String> consumer1 = new IPersonaConsumerImpl();
-		LOG.info("Consumer clase : ");
-		consumer1.accept("Mauricio Cacuango");
-
-		// Lambda
-
-		IPersonaConsumer<String> consumer2 = cadena -> {
+		// Consumer
+		// 1. Clases
+		IPersonaConsumer<String> consumerHO = new IPersonaConsumerImpl();
+		MetodosHighOrder.aceptar(consumerHO, "ConsumerHO");
+		MetodosHighOrder.aceptar(new IPersonaConsumerImpl(), "Otra forma de implementar");
+		// 2. Lambdas
+		MetodosHighOrder.aceptar(cadena -> {
 			LOG.info("1");
-			LOG.info("2");
 			LOG.info(cadena);
+		}, "ConsumerHO2");
 
-		};
-		LOG.info("Consumer lambda :  ");
-		consumer2.accept("Mauricio Cacuango2");
+		// 3. HighOrder
 
-		//Metodos Referenciados 
+		MetodosHighOrder.aceptar(consumerHO, "ConsumerHO3");
 
-		IPersonaConsumer<String> consumer3 = meto2::aceptar;
-		LOG.info("Consumer metodo referenciado: ");
-		consumer3.accept("Alexandra");
+		///////////////////////////////////////////////////////////
 
-		// 3. Predicate
+		/* Interfaces Funcionales Java */
 
-		// lambda
+		// 1.Supplier
 
-		IPersonaPredicate<Integer> predicate1 = valor -> valor.compareTo(8) == 0;
-		LOG.info("Predicate lambda: " + predicate1.evaluar(5));
-
-		IPersonaPredicate<Integer> predicate2 = valor -> {
-			Integer valor2 = 10;
-			valor = valor + valor2;
-			if (valor.compareTo(100) > 0) {
-				return true;
-			} else {
-				return false;
-			}
-		};
-		LOG.info("Predicate lambda2: " + predicate2.evaluar(95));
-
-		IPersonaPredicate<String> predicate3 = letra -> "Alexander".contains(letra);
-		LOG.info("Predicate lambda3: " + predicate3.evaluar("a"));
+		// con F3 se va directo a la implementacion de cualquier metodo
+		Stream<String> lista = Stream.generate(() -> "1751556653").limit(10);//genera 10 filas con las mismas cadenas
+		lista.forEach(cadena -> LOG.info(cadena));
+		LOG.info("Prueba " + lista);
 		
-		IPersonaBiPredicate<String, String> predicate4 = (letra, cadena) ->cadena.toLowerCase().contains(letra.toLowerCase());
-		LOG.info("Predicate lambda4: " + predicate4.evaluar("d","Dante"));
-		//Metodos Referenciados 
-
-		IPersonaPredicate<Integer> predicate5 = meto2::evaluar;
-		LOG.info("Predicate metodos referenciados: " + predicate5.evaluar(45));
-
+		//2. Consumer
 		
+		List<Integer> listaNumeros = Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13);
+		listaNumeros.forEach(cadena -> {
+			LOG.info("1");
+			LOG.info(" " + cadena);
+		});
+		
+		//3.Predicate
+		Stream<Integer> listaFinal =listaNumeros.stream().filter(numero -> numero >=5);// todos los que completen true pasan a la lista final
+		listaFinal.forEach(numero -> LOG.info("valor: " + numero)); //cuando no se manda a imprimir solo String en log hay que añadir una cadena de string
 	
-		//4. Function
-		IPersonaFunction<String, Integer> function = numero -> numero.toString();
-		LOG.info("Function lambda: " + function.aplicar(8));
-
-		IPersonaFunction<String, Integer> function1 = numero -> {
-			String valorFinal = numero.toString().concat(" valor uwu");
-			return valorFinal;
-		};
-		LOG.info("Function lambda1: " + function1.aplicar(10));
+		//4.Function
 		
-		//5. Unary Operator
+		Stream<String> listaCambiada =listaNumeros.stream().map(numero -> {
+			Integer num = 10;
+			
+			num = numero + num;
+			
+			return "N: " + num;
+			
+		});
+		listaCambiada.forEach(cadena -> LOG.info(cadena));
 		
-		IPersonaUnaryOperator<Integer> unary = numero -> numero +(numero*2);
-		LOG.info("Unary lambda: " + unary.aplicar(3));
+		//5.Unary Operator
 		
-		IPersonaUnaryOperatorFunction<Integer> unary2 = numero -> numero +(numero*2);
-		LOG.info("Unary lambda2: " + unary2.aplicar(3));
-
+		Stream<Integer> listaCambiada2 =listaNumeros.stream().map(numero -> {
+			Integer num = 10;
+			
+			num = numero + num;
+			
+			return num;
+			
+		});
+		listaCambiada2.forEach(cadena -> LOG.info(cadena.toString())); // solo para la impresion se hace toString
+	
 	}
 
 }
